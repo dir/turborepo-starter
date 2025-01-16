@@ -2,6 +2,7 @@
   "name": "turborepo-starter",
   "private": true,
   "scripts": {
+    "check:all": "turbo run check:all",
     "check:format": "turbo run check:format --continue -- --cache --cache-location .cache/.prettiercache",
     "check:outdated": "turbo run check:outdated",
     "check:types": "turbo run check:types",

@@ -1,4 +1,5 @@
 {
+  "$schema": "https://turborepo.org/schema.json",
   "ui": "tui",
   "tasks": {
     "check:types": {
@@ -7,6 +8,9 @@
     "check:format": {
       "outputs": [".cache/.prettiercache"],
       "outputLogs": "new-only"
+    },
+    "check:all": {
+      "dependsOn": ["^check:types", "^check:format"]
     }
   }
 }
