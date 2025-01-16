@@ -2,7 +2,9 @@
   "name": "turborepo-starter",
   "private": true,
   "scripts": {
-    "check:all": "turbo run check:all",
+    "clean": "git clean -xdf .cache .turbo node_modules",
+    "clean:all": "turbo run clean --parallel",
+    "check:all": "turbo run check:all --parallel",
     "check:format": "turbo run check:format --continue -- --cache --cache-location .cache/.prettiercache",
     "check:outdated": "turbo run check:outdated",
     "check:types": "turbo run check:types",

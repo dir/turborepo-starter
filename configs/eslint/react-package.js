@@ -10,7 +10,7 @@ import { config as baseConfig } from "./base.js";
 /**
  * A custom ESLint configuration for packages that use React.
  *
- * @type {import("eslint").Linter.Config}
+ * @type {Awaited<import('typescript-eslint').Config>}
  */
 export const config = [
   ...baseConfig,

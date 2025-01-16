@@ -11,9 +11,9 @@ import { config as baseConfig } from "./base.js";
 /**
  * A custom ESLint configuration for Next.js projects.
  *
- * @type {import("eslint").Linter.Config}
- * */
-export const nextJsConfig = [
+ * @type {Awaited<import('typescript-eslint').Config>}
+ */
+export const config = [
   ...baseConfig,
   js.configs.recommended,
   eslintConfigPrettier,

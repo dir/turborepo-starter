@@ -2,6 +2,12 @@
   "$schema": "https://turborepo.org/schema.json",
   "ui": "tui",
   "tasks": {
+    "clean": {
+      "cache": false
+    },
+    "//#clean": {
+      "cache": false
+    },
     "check:types": {
       "outputs": [".cache/tsbuildinfo.json"]
     },
