@@ -1,0 +1,14 @@
+{
+  "name": "@repo/prettier-config",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo node_modules",
+    "check:format": "prettier --check . --ignore-path ../../.gitignore",
+    "check:types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "prettier": "catalog:"
+  }
+}

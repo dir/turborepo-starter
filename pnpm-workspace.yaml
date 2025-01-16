@@ -1,0 +1,11 @@
+packages:
+  - apps/*
+  - configs/*
+  - packages/*
+
+catalog:
+  prettier: ^3.4.2
+
+catalogs:
+  "prettier":
+    prettier: ^3.4.2
