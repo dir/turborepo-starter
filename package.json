@@ -6,9 +6,12 @@
     "clean:all": "turbo run clean --parallel",
     "check:all": "turbo run check:all --parallel",
     "check:format": "turbo run check:format --continue -- --cache --cache-location .cache/.prettiercache",
-    "check:outdated": "turbo run check:outdated",
-    "check:types": "turbo run check:types",
-    "fix:format": "turbo run check:format --continue -- --write --cache --cache-location .cache/.prettiercache"
+    "check:outdated": "turbo run check:outdated --parallel",
+    "check:types": "turbo run check:types --parallel --continue",
+    "check:lint": "turbo run check:lint --continue -- --cache --cache-location .cache/.eslintcache",
+    "fix:lint": "turbo run check:lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
+    "fix:format": "turbo run check:format --continue -- --write --cache --cache-location .cache/.prettiercache",
+    "fix:all": "turbo run fix:all --parallel"
   },
   "devDependencies": {
     "@repo/prettier-config": "workspace:*",

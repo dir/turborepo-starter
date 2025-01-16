@@ -8,6 +8,9 @@
     "//#clean": {
       "cache": false
     },
+    "check:lint": {
+      "outputs": [".cache/.eslintcache"]
+    },
     "check:types": {
       "outputs": [".cache/tsbuildinfo.json"]
     },
@@ -16,7 +19,16 @@
       "outputLogs": "new-only"
     },
     "check:all": {
-      "dependsOn": ["^check:types", "^check:format"]
+      "dependsOn": ["check:types", "check:lint", "check:format"]
+    },
+    "fix:lint": {
+      "outputs": [".cache/.eslintcache"]
+    },
+    "fix:format": {
+      "outputs": [".cache/.prettiercache"]
+    },
+    "fix:all": {
+      "dependsOn": ["fix:lint", "fix:format"]
     }
   }
 }
