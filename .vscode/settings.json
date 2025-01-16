@@ -1,19 +1,35 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.ignorePath": ".gitignore",
   "editor.formatOnSave": true,
 
-  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.runtime": "node",
+  "eslint.workingDirectories": [
+    { "pattern": "apps/*/" },
+    { "pattern": "configs/*/" },
+    { "pattern": "packages/*/" }
+  ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
 
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+  "tailwindCSS.experimental.configFile": "./packages/ui/tailwind.config.ts",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "next/router.d.ts",
+    "next/dist/client/router.d.ts"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+
   "json.schemas": [
-    /* Turborepo (https://turbo.build/repo) */
     {
       "fileMatch": ["turbo.json"],
       "url": "https://turborepo.org/schema.json"
     },
-    /* shadcn/ui (https://ui.shadcn.com) */
     {
       "fileMatch": ["components.json"],
       "url": "https://ui.shadcn.com/schema.json"

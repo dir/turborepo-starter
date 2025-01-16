@@ -6,33 +6,28 @@
       "dependsOn": ["^build"],
       "outputs": [".cache/tsbuildinfo.json", "dist/**"]
     },
+    "dev": {
+      "dependsOn": ["^dev"],
+      "cache": false,
+      "persistent": false
+    },
+    "style": {
+      "outputs": [".cache/.prettiercache"],
+      "outputLogs": "new-only"
+    },
+    "lint": {
+      "dependsOn": ["^build"],
+      "outputs": [".cache/.eslintcache"]
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": [".cache/tsbuildinfo.json"]
+    },
     "clean": {
       "cache": false
     },
     "//#clean": {
       "cache": false
-    },
-    "check:lint": {
-      "outputs": [".cache/.eslintcache"]
-    },
-    "check:types": {
-      "outputs": [".cache/tsbuildinfo.json"]
-    },
-    "check:format": {
-      "outputs": [".cache/.prettiercache"],
-      "outputLogs": "new-only"
-    },
-    "check:all": {
-      "dependsOn": ["check:types", "check:lint", "check:format"]
-    },
-    "fix:lint": {
-      "outputs": [".cache/.eslintcache"]
-    },
-    "fix:format": {
-      "outputs": [".cache/.prettiercache"]
-    },
-    "fix:all": {
-      "dependsOn": ["fix:lint", "fix:format"]
     }
   }
 }
