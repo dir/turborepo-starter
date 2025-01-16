@@ -2,6 +2,8 @@
   "name": "turborepo-starter",
   "private": true,
   "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo watch dev --continue",
     "clean": "git clean -xdf .cache .turbo node_modules",
     "clean:all": "turbo run clean --parallel",
     "check:all": "turbo run check:all --parallel",

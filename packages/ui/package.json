@@ -12,6 +12,8 @@
     "./hooks/*": "./src/hooks/*.ts"
   },
   "scripts": {
+    "build": "tsc",
+    "dev": "tsc",
     "clean": "git clean -xdf .cache .turbo node_modules",
     "check:format": "prettier --check . --ignore-path ../../.gitignore",
     "check:lint": "eslint",
