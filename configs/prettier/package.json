@@ -1,14 +1,21 @@
 {
   "name": "@repo/prettier-config",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
-  "version": "1.0.0",
+  "exports": {
+    ".": "./config.js"
+  },
   "scripts": {
     "clean": "git clean -xdf .cache .turbo node_modules",
     "check:format": "prettier --check . --ignore-path ../../.gitignore",
+    "check:outdated": "pnpm outdated",
     "check:types": "tsc --noEmit"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*"
+  },
+  "peerDependencies": {
     "prettier": "catalog:"
   }
 }

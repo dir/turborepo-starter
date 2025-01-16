@@ -2,7 +2,10 @@
   "name": "turborepo-starter",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "check:types": "turbo run check:types"
+  },
+  "devDependencies": {
+    "turbo": "catalog:"
   },
   "engines": {
     "node": ">=20.18.1",
