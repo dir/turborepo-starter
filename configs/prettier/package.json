@@ -9,10 +9,12 @@
   "scripts": {
     "clean": "git clean -xdf .cache .turbo node_modules",
     "check:format": "prettier --check . --ignore-path ../../.gitignore",
+    "check:lint": "eslint",
     "check:outdated": "pnpm outdated",
     "check:types": "tsc --noEmit"
   },
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*"
   },
   "peerDependencies": {
