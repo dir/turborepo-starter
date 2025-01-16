@@ -4,6 +4,33 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    prettier:
+      specifier: ^3.4.2
+      version: 3.4.2
+
 importers:
 
   .: {}
+
+  configs/eslint: {}
+
+  configs/prettier:
+    dependencies:
+      prettier:
+        specifier: 'catalog:'
+        version: 3.4.2
+
+  configs/typescript: {}
+
+packages:
+
+  prettier@3.4.2:
+    resolution: {integrity: sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==}
+    engines: {node: '>=14'}
+    hasBin: true
+
+snapshots:
+
+  prettier@3.4.2: {}
