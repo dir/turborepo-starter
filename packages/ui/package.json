@@ -25,15 +25,16 @@
   },
   "scripts": {
     "ui:add": "pnpm dlx shadcn@latest add",
+    "postui:add": "prettier src tailwind.config.ts --write --list-different --ignore-path ../../.gitignore && eslint src --fix",
     "dev": "tsup --watch",
     "build": "tsup",
     "clean": "git clean -xdf .cache dist .turbo node_modules",
     "style": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit",
-    "postadd": "prettier src --write --list-different --ignore-path ../../.gitignore && eslint src --fix"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-select": "^2.1.4",
     "@radix-ui/react-separator": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.1",
