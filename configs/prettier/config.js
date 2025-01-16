@@ -1,12 +1,20 @@
 /**
- * @see https://prettier.io/docs/en/configuration.html
- * @type {import("prettier").Config}
+ * Some of Prettier's defaults can be overridden by an EditorConfig file. We
+ * define those here to ensure that doesn't happen.
+ *
+ * See: https://github.com/prettier/prettier/blob/main/docs/configuration.md#editorconfig
+ *
+ * @type {import('prettier').Options}
  */
-const config = {
-  trailingComma: "es5",
-  tabWidth: 8,
-  semi: false,
-  singleQuote: true,
+const overridableDefaults = {
+  endOfLine: "lf",
+  tabWidth: 2,
+  printWidth: 90,
+  useTabs: false,
 };
 
-export default config;
+/** @type {import('prettier').Options} */
+export default {
+  ...overridableDefaults,
+  singleQuote: false,
+};

@@ -1,17 +1,12 @@
 {
-        "$schema": "https://turbo.build/schema.json",
-        "ui": "tui",
-        "tasks": {
-                "check:types": {
-                        "outputs": [".cache/tsbuildinfo.json"]
-                },
-                "check:format": {
-                        "outputs": [".cache/.prettiercache"],
-                        "outputLogs": "new-only"
-                },
-                "dev": {
-                        "cache": false,
-                        "persistent": true
-                }
-        }
+  "ui": "tui",
+  "tasks": {
+    "check:types": {
+      "outputs": [".cache/tsbuildinfo.json"]
+    },
+    "check:format": {
+      "outputs": [".cache/.prettiercache"],
+      "outputLogs": "new-only"
+    }
+  }
 }

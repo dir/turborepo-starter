@@ -1,0 +1,22 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  "json.schemas": [
+    /* Turborepo (https://turbo.build/repo) */
+    {
+      "fileMatch": ["turbo.json"],
+      "url": "https://turborepo.org/schema.json"
+    },
+    /* shadcn/ui (https://ui.shadcn.com) */
+    {
+      "fileMatch": ["components.json"],
+      "url": "https://ui.shadcn.com/schema.json"
+    }
+  ]
+}
