@@ -1,15 +1,20 @@
 {
-  "name": "@repo/typescript-config",
-  "private": true,
-  "version": "0.1.0",
-  "exports": {
-    ".": "./base.json",
-    "./base": "./base.json",
-    "./nextjs": "./nextjs.json",
-    "./node-package": "./node-package.json",
-    "./react-package": "./react-package.json"
-  },
-  "peerDependencies": {
-    "typescript": "catalog:"
-  }
+        "name": "@repo/typescript-config",
+        "private": true,
+        "version": "0.1.0",
+        "exports": {
+                ".": "./base.json",
+                "./base": "./base.json",
+                "./nextjs": "./nextjs.json",
+                "./node-package": "./node-package.json",
+                "./react-package": "./react-package.json"
+        },
+        "scripts": {
+                "clean": "git clean -xdf .cache .turbo node_modules",
+                "check:format": "prettier --check . --ignore-path ../../.gitignore",
+                "check:outdated": "pnpm outdated"
+        },
+        "peerDependencies": {
+                "typescript": "catalog:"
+        }
 }
