@@ -4,34 +4,38 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./globals.css": "./src/styles/globals.css",
     "./*": {
-      "types": "./dist/components/*.d.ts",
-      "default": [
-        "./dist/components/*.js",
-        "./dist/components/*.jsx"
-      ]
+      "import": {
+        "types": "./dist/*.d.ts",
+        "default": "./dist/*.js"
+      },
+      "require": {
+        "types": "./dist/*.d.cts",
+        "default": "./dist/*.cjs"
+      }
     },
-    "./utils": {
-      "types": "./dist/lib/utils.d.ts",
-      "default": "./dist/lib/utils.js"
-    },
-    "./hooks/*": {
-      "types": "./dist/hooks/*.d.ts",
-      "default": "./dist/hooks/*.js"
-    },
-    "./configs/postcss": "./postcss.config.mjs",
-    "./configs/tailwind": "./tailwind.config.ts",
-    "./globals.css": "./src/styles/globals.css"
+    "./configs/*": {
+      "import": {
+        "types": "./dist/configs/*.config.d.ts",
+        "default": "./dist/configs/*.config.js"
+      },
+      "require": {
+        "types": "./dist/configs/*.config.d.cts",
+        "default": "./dist/configs/*.config.cjs"
+      }
+    }
   },
   "scripts": {
     "ui:add": "pnpm dlx shadcn@latest add",
-    "postui:add": "prettier src tailwind.config.ts --write --list-different --ignore-path ../../.gitignore && eslint src --fix",
-    "dev": "tsup --watch",
+    "dev": "git clean -xdf dist .cache && tsup --watch",
     "build": "tsup",
     "clean": "git clean -xdf .cache dist .turbo node_modules",
     "style": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "postui:add": "prettier src tailwind.config.ts --write --list-different --ignore-path ../../.gitignore && eslint src --fix",
+    "postinstall": "turbo @repo/ui#build --continue"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.2",
@@ -41,8 +45,10 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "0.471.1",
+    "next-themes": "^0.4.4",
     "react": "catalog:react19",
-    "react-dom": "catalog:react19"
+    "react-dom": "catalog:react19",
+    "sonner": "^1.7.2"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -51,11 +57,15 @@
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
     "autoprefixer": "^10.4.20",
+    "esbuild-plugin-preserve-directives": "^0.0.11",
     "postcss": "^8.5.1",
+    "rollup-plugin-preserve-directives": "^0.4.0",
+    "rollup-preserve-directives": "^1.1.3",
     "tailwind-merge": "^2.6.0",
     "tailwindcss": "catalog:",
     "tailwindcss-animate": "^1.0.7",
     "tsup": "^8.3.5",
     "typescript": "catalog:"
-  }
+  },
+  "sideEffects": false
 }

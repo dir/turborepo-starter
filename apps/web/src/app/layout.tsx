@@ -1,15 +1,17 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import { cn } from "@repo/ui/utils";
+import { Outfit, Space_Mono } from "next/font/google";
+import { ThemeProvider } from "@repo/ui/themes";
+import { Toaster } from "@repo/ui/sonner";
 import "@repo/ui/globals.css";
 
-const fontSans = Geist({
+const fontSans = Outfit({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-const fontMono = Geist_Mono({
+const fontMono = Space_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  weight: ["400", "700"],
 });
 
 export default function RootLayout({
@@ -19,8 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn(fontSans.variable, fontMono.variable, "font-sans antialiased")}>
-        {children}
+      <body className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased`}>
+        <ThemeProvider>
+          <main>{children}</main>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

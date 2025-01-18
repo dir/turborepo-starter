@@ -1,13 +1,10 @@
 import type { Config } from "tailwindcss";
-import tailwindcssAnimate from "tailwindcss-animate";
 import { fontFamily } from "tailwindcss/defaultTheme";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 const config = {
   darkMode: ["class"],
-  content: [
-    "src/**/*.{ts,tsx,js,jsx}",
-    "../../packages/ui/dist/components/**/*.{js,jsx}",
-  ],
+  content: ["src/**/*.{ts,tsx,js,jsx}", "../../packages/ui/dist/**/*.js"],
   theme: {
     extend: {
       fontFamily: {
