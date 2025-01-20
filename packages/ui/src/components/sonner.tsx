@@ -27,5 +27,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
   );
 };
 
-export * from "sonner";
-export { Toaster };
+const toast = Sonner.toast;
+const useSonner = Sonner.useSonner;
+
+export { Toaster, toast, useSonner };
