@@ -1,0 +1,226 @@
+#!/usr/bin/env node
+
+/**
+ * @fileoverview
+ * This script fixes import paths in the `@repo/ui` package.
+ * It searches for `from "src/` and replaces it with `from "@repo/ui/`.
+ * This is useful when you want to import from the `@repo/ui` package from other packages.
+ */
+
+import { parseArgs } from "node:util";
+import process from "node:process";
+import fs from "node:fs/promises";
+import path from "node:path";
+import pc from "picocolors";
+
+const DEFAULT_PATH = path.join(process.cwd(), "src");
+/** Path to the TypeScript configuration file */
+const TSCONFIG_PATH = path.join(process.cwd(), "tsconfig.json");
+/** Text pattern to search for in source files */
+const TARGET_TEXT = 'from "src/';
+/** Text to replace the target pattern with */
+const REPLACEMENT_TEXT = 'from "@repo/ui/';
+/** @typedef {import('fs').Dirent} Dirent */
+
+/**
+ * Console logger
+ */
+const log = {
+  info: (...args) => console.log(...args),
+  success: (...args) => console.log(pc.green(...args)),
+  error: (...args) => console.error("❌", pc.red(...args)),
+  warn: (...args) => console.warn("⚠️", pc.yellow(...args)),
+};
+
+/**
+ * Logs an error message and exits the process
+ *
+ * @param {any[]} data - The data to log
+ * @param {number|string|null} [exitCode] - The exit code. For string type, only integer strings (e.g.,'1') are allowed.
+ */
+const error = (data, exitCode = 1) => {
+  log.error(data);
+  process.exit(exitCode);
+};
+
+/**
+ * Checks if a path is a file
+ *
+ * @param {string} filePath - The path to the file
+ * @returns {Promise<boolean>}
+ */
+const isFile = (filePath) => fs.stat(filePath).then((stat) => stat.isFile());
+
+/**
+ * Parses a JSON object
+ *
+ * @param {string|object} pathOrObject - Path to a JSON file, or an object, or a stringified JSON object
+ * @returns {object} The parsed JSON object
+ * @throws {Error} If the JSON object cannot be read or parsed
+ */
+const parseJsonObject = async (pathOrObject) =>
+  typeof pathOrObject === "string"
+    ? JSON.parse(
+        isFile(pathOrObject) ? await fs.readFile(pathOrObject, "utf-8") : pathOrObject,
+      )
+    : pathOrObject;
+
+/**
+ * Extracts the primary path alias from a tsconfig
+ *
+ * Primary is defined as the first alias that has a value
+ * that includes the string "src/*".
+ *
+ * @param {string|object} tsconfigPathOrObject - Path to tsconfig.json, or a tsconfig object
+ * @returns {Promise<string|undefined>} The path alias if found
+ * @throws {Error} If tsconfig.json cannot be read or parsed
+ */
+async function extractTsConfigPrimaryPathAlias(tsconfigPathOrObject) {
+  let tsconfig;
+
+  try {
+    tsconfig = await parseJsonObject(tsconfigPathOrObject);
+  } catch (error) {
+    console.error(`❌ Error parsing tsconfig:`, error);
+  }
+
+  if (!tsconfig?.compilerOptions?.paths) return undefined;
+
+  const { paths } = tsconfig.compilerOptions;
+  try {
+    return Object.entries(paths)
+      .find(([key, value]) => {
+        if (!Array.isArray(value)) return false;
+        return key.includes("@") && key.includes("/") && value[0]?.includes("src");
+      })?.[0]
+      .replace("*", "");
+  } catch (error) {
+    console.error("❌ Error reading tsconfig.json:", error);
+    throw error;
+  }
+}
+
+/**
+ * Processes a single file by replacing import path patterns
+ *
+ * @param {string} filePath - The path to the file to process
+ * @returns {Promise<boolean>} - Whether the file was updated
+ */
+async function processFile(filePath) {
+  let updated = false;
+
+  try {
+    const content = await fs.readFile(filePath, "utf8");
+    const regex = new RegExp(TARGET_TEXT.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g");
+    const updatedContent = content.replace(regex, REPLACEMENT_TEXT);
+
+    if (content !== updatedContent) {
+      await fs.writeFile(filePath, updatedContent, "utf8");
+      updated = true;
+      console.log(`✅ Updated imports in: ${filePath}`);
+    }
+  } catch (error) {
+    console.error(`❌ Error processing ${filePath}:`, error);
+  }
+
+  return updated;
+}
+
+/**
+ * Recursively walks through a directory and processes files
+ *
+ * @param {string} directory - The directory path to process
+ * @param {(filePath: string, item: Dirent) => Promise<void>} callback - The function to call for each file
+ */
+const walkDirectory = async (directory, callback) => {
+  const items = await fs.readdir(directory, { withFileTypes: true });
+  for (const item of items) {
+    const filePath = path.join(directory, item.name);
+    item.isFile()
+      ? await callback(filePath, item)
+      : item.isDirectory() && (await walkDirectory(filePath, callback));
+  }
+};
+
+async function main() {
+  if (!DIR_PATH) {
+    console.error(`Please provide a directory path`);
+    process.exit(1);
+  }
+
+  console.log(`tsconfig: ${TSCONFIG_PATH}`);
+
+  console.log("🛠️ Checking imports...");
+
+  try {
+    const tsConfigPath = await extractTsConfigPrimaryPathAlias(TSCONFIG_PATH);
+
+    if (!tsConfigPath) {
+      console.error(`⚠️ No path alias found in tsconfig.json, skipping...`);
+      process.exit(0);
+    }
+
+    console.log(` • path alias: ${tsConfigPath}`);
+
+    await walkDirectory(DIR_PATH, async (filePath) => {
+      const file = await fs.readFile(filePath, "utf8");
+    });
+    console.log("\n✨ Finished processing files successfully!");
+  } catch (error) {
+    console.error("❌ Fatal error:", error);
+    process.exit(1);
+  }
+}
+
+/**
+ *
+ * @param {string} tsconfigPath
+ */
+const getProjectFromTsConfig = async (tsconfigPath) => {
+  const primaryPathAlias = await extractTsConfigPrimaryPathAlias(TSCONFIG_PATH);
+  return { tsconfig, primaryPathAlias };
+};
+
+const getParsedArgs = () => {
+  const { positionals } = parseArgs({
+    args: process.argv.slice(2),
+    allowPositionals: true,
+  });
+
+  positionals.length > 1 &&
+    error("Too many arguments provided, please provide a single path to a tsconfig file.");
+
+  return {
+    tsconfigFilePath: positionals.length === 0 ? DEFAULT_PATH : positionals[0],
+  };
+};
+
+async function run() {
+  log.info("🛠️ Fixing imports...");
+  const { tsconfigFilePath } = getParsedArgs();
+
+  console.log(JSON.stringify(tsconfigFilePath, null, 2));
+}
+
+run();
+
+/*
+async function walkDirectory(directory, callback) {
+  try {
+    const items = await fs.readdir(directory, { withFileTypes: true });
+
+    for (const item of items) {
+      const fullPath = path.join(directory, item.name);
+
+      if (item.isDirectory()) {
+        await walkDirectory(fullPath);
+      } else if (item.isFile() && /\.(js|jsx|ts|tsx)$/.test(item.name)) {
+        const updated = await processFile(fullPath);
+        console.log(`- ${fullPath}: ${updated}`);
+      }
+    }
+  } catch (error) {
+    console.error(`❌ Error walking directory ${directory}:`, error);
+  }
+}
+  */
