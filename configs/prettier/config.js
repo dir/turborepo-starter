@@ -1,4 +1,4 @@
-import { fileURLToPath, URL } from "url";
+import { fileURLToPath, URL } from "node:url";
 
 /** @typedef {import("prettier").Config} PrettierConfig */
 /** @typedef {import("prettier-plugin-tailwindcss").PluginOptions} TailwindConfig */
@@ -14,7 +14,7 @@ import { fileURLToPath, URL } from "url";
 const overridableDefaults = {
   endOfLine: "lf",
   tabWidth: 2,
-  printWidth: 90,
+  printWidth: 94,
   useTabs: false,
 };
 
