@@ -1,0 +1,17 @@
+import { defineConfig } from "tsup";
+
+export default defineConfig((options) => {
+  return {
+    entry: ["src/index.tsx"],
+    format: ["esm", "cjs"],
+    external: ["react", "react-dom"],
+    dts: true,
+    splitting: true,
+    sourcemap: true,
+    bundle: false,
+    clean: true,
+    skipNodeModulesBundle: true,
+    treeshake: false,
+    minify: !options.watch,
+  }
+})

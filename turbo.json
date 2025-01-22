@@ -3,19 +3,20 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".cache/tsbuildinfo.json", "dist/**"]
+      "dependsOn": ["^typecheck", "typecheck", "lint"],
+      "outputs": [".cache/tsbuildinfo.json", "dist/**"],
+      "outputLogs": "new-only"
     },
     "dev": {
       "dependsOn": ["^dev"],
       "cache": false,
       "persistent": false
     },
-    "style": {
-      "outputs": [".cache/.prettiercache"],
-      "outputLogs": "new-only"
-    },
     "lint": {
+      "dependsOn": ["^build"],
+      "outputs": [".cache/.eslintcache"]
+    },
+    "lint:fix": {
       "dependsOn": ["^build"],
       "outputs": [".cache/.eslintcache"]
     },
@@ -23,11 +24,20 @@
       "dependsOn": ["^build"],
       "outputs": [".cache/tsbuildinfo.json"]
     },
-    "clean": {
-      "cache": false
+    "format": {
+      "outputs": [".cache/.prettiercache"],
+      "outputLogs": "new-only"
     },
-    "//#clean": {
-      "cache": false
+    "format:fix": {
+      "outputs": [".cache/.prettiercache"]
+    },
+    "clean": { "cache": false },
+    "//#clean": { "cache": false },
+    "ws:lint": {},
+    "//#ws:lint": {},
+    "gen": {
+      "cache": false,
+      "interactive": true
     }
   }
 }

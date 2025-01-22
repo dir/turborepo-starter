@@ -6,8 +6,8 @@
     ".": "./base.json",
     "./base": "./base.json",
     "./nextjs": "./nextjs.json",
-    "./node-package": "./node-package.json",
-    "./react-package": "./react-package.json"
+    "./node": "./node.json",
+    "./react": "./react.json"
   },
   "scripts": {
     "clean": "git clean -xdf .cache .turbo node_modules",

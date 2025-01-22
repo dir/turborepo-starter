@@ -1,13 +1,15 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "prettier.ignorePath": ".gitignore",
   "editor.formatOnSave": true,
+  "prettier.ignorePath": ".gitignore",
 
+  "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
   "eslint.runtime": "node",
   "eslint.workingDirectories": [
     { "pattern": "apps/*/" },
     { "pattern": "configs/*/" },
-    { "pattern": "packages/*/" }
+    { "pattern": "packages/*/" },
+    { "pattern": "turbo/*/" }
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
@@ -24,7 +26,6 @@
     "next/dist/client/router.d.ts"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-
   "json.schemas": [
     {
       "fileMatch": ["turbo.json"],
@@ -34,5 +35,11 @@
       "fileMatch": ["components.json"],
       "url": "https://ui.shadcn.com/schema.json"
     }
-  ]
+  ],
+  "[handlebars]": {
+    "editor.formatOnSave": false
+  },
+  "files.associations": {
+    "*.json.hbs": "handlebars"
+  }
 }
