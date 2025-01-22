@@ -4,26 +4,31 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo watch dev --continue",
-    "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
-    "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
-    "style": "turbo run style --continue -- --check --cache --cache-location .cache/.prettiercache",
-    "style:fix": "turbo run style --continue -- --write --cache --cache-location .cache/.prettiercache",
-    "typecheck": "turbo run typecheck --parallel --continue",
-    "ui:add": "turbo run ui:add",
-    "ws:clean": "turbo run clean --parallel",
+    "start": "turbo run start",
+    "check": "turbo run lint typecheck format --continue --",
+    "fix": "turbo run lint:fix format:fix --continue --",
+    "lint": "turbo run lint --continue --",
+    "lint:fix": "turbo run lint:fix --continue --",
+    "format": "turbo run format --continue --",
+    "format:fix": "turbo run format:fix --continue --",
+    "typecheck": "turbo run typecheck --continue",
+    "ui:add": "turbo run ui:add --",
+    "ws:clean": "turbo run clean",
     "ws:outdated": "pnpm outdated --recursive",
     "ws:lint": "pnpm dlx sherif@latest",
-    "clean": "git clean -xdf .cache .turbo node_modules",
-    "postinstall": "pnpm ws:lint"
+    "clean": "git clean -xdf  -e \".turbo/config.json\" .turbo .cache node_modules",
+    "postinstall": "turbo run ws:lint build --only --filter=!{apps/*} --continue --output-logs=new-only --ui=stream"
   },
   "devDependencies": {
     "@repo/prettier-config": "workspace:*",
+    "@turbo/gen": "^2.3.3",
+    "execa": "^9.5.2",
     "turbo": "catalog:"
   },
+  "packageManager": "pnpm@9.15.2",
   "engines": {
     "node": ">=20.18.1",
     "pnpm": "^9.15.2"
   },
-  "packageManager": "pnpm@9.15.2",
   "prettier": "@repo/prettier-config"
 }
