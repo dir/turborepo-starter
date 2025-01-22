@@ -5,31 +5,27 @@ const config: Options = {
   format: ["esm", "cjs"],
   external: ["react", "react-dom", "next"],
   dts: true,
-  splitting: false,
+  splitting: true,
   sourcemap: true,
   bundle: false,
+  clean: true,
   skipNodeModulesBundle: true,
   treeshake: false,
+  tsconfig: "tsconfig.json",
 };
 
-export default defineConfig((options) => [
+export default defineConfig((_options) => [
   {
     ...config,
-    minify: !options.watch,
-    clean: !options.watch,
     entry: ["tailwind.config.ts", "postcss.config.mjs"],
     outDir: "dist/configs",
   },
   {
     ...config,
-    minify: !options.watch,
-    clean: !options.watch,
     entry: ["src/components/*.{ts,tsx}"],
   },
   {
     ...config,
-    minify: !options.watch,
-    clean: !options.watch,
     entry: ["src/**/*.{ts,tsx}", "!src/components/**/*"],
   },
 ]);
