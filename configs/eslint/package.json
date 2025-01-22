@@ -7,30 +7,36 @@
     ".": "./base.js",
     "./base": "./base.js",
     "./nextjs": "./nextjs.js",
-    "./react-package": "./react-package.js"
+    "./react": "./react.js"
   },
   "scripts": {
     "clean": "git clean -xdf .cache .turbo node_modules",
-    "style": "prettier --check . --ignore-path ../../.gitignore",
+    "format": "prettier . --check --ignore-path ../../.gitignore --cache --cache-location .cache/.prettiercache",
+    "format:fix": "pnpm run format --write",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^15.1.0",
+    "@next/eslint-plugin-next": "^15.1.5",
     "@repo/typescript-config": "workspace:*",
     "@types/eslint-config-prettier": "^6.11.3",
-    "@typescript-eslint/eslint-plugin": "^8.15.0",
-    "@typescript-eslint/parser": "^8.15.0",
+    "@typescript-eslint/eslint-plugin": "^8.21.0",
+    "@typescript-eslint/parser": "^8.21.0",
     "eslint": "catalog:",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-only-warn": "^1.1.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-import-resolver-typescript": "^3.7.0",
+    "eslint-plugin-n": "^17.15.1",
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-turbo": "^2.3.0",
     "globals": "^15.12.0",
     "typescript": "catalog:",
-    "typescript-eslint": "^8.15.0"
+    "typescript-eslint": "^8.21.0"
   },
   "peerDependencies": {
     "eslint": "catalog:"
+  },
+  "dependencies": {
+    "@eslint/compat": "^1.2.5",
+    "eslint-plugin-import-x": "^4.6.1"
   }
 }
