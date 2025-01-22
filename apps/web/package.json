@@ -6,19 +6,22 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "start": "next start",
     "clean": "git clean -xdf .cache .next next-env.d.ts .turbo node_modules",
-    "style": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint",
+    "format": "prettier . --check --ignore-path ../../.gitignore --cache --cache-location .cache/.prettiercache",
+    "format:fix": "pnpm run format --write",
+    "lint": "eslint --cache --cache-location .cache/.eslintcache",
+    "lint:fix": "pnpm run lint --fix",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
-    "next": "^15.1.4",
+    "next": "^15.1.5",
     "react": "catalog:react19",
     "react-dom": "catalog:react19"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:^",
+    "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^20",
     "@types/react": "catalog:react19",

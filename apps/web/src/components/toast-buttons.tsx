@@ -10,13 +10,8 @@ export function ToastButtons() {
       <Button variant="secondary" onClick={() => toast.info("This is an info toast.")}>
         Info Toast
       </Button>
-      <Button onClick={() => toast.success("This is a success toast!")}>
-        Success Toast
-      </Button>
-      <Button
-        variant="destructive"
-        onClick={() => toast.error("This is an error toast!")}
-      >
+      <Button onClick={() => toast.success("This is a success toast!")}>Success Toast</Button>
+      <Button variant="destructive" onClick={() => toast.error("This is an error toast!")}>
         Error Toast
       </Button>
     </div>
